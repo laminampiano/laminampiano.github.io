@@ -3,209 +3,736 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lami Nam – Pianistin</title>
+  <title>Lami Nam – Jazz Pianist</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,600;1,400;1,600&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --bg:    #faf8f5;
-      --bg2:   #f2ede6;
-      --text:  #1c1916;
-      --muted: #8a7f74;
-      --acc:   #8b5e3c;
-      --acc2:  #c4956a;
-      --line:  #d9d0c5;
-      --serif: 'Playfair Display', Georgia, serif;
-      --sans:  'Jost', sans-serif;
+      --bg:      #16131e;
+      --bg2:     #1e1a2a;
+      --bg3:     #251f35;
+      --gold:    #c9993a;
+      --gold2:   #e8bf6e;
+      --text:    #ede8df;
+      --muted:   #7a7088;
+      --line:    rgba(201,153,58,0.2);
+      --serif:   'Bodoni Moda', Georgia, serif;
+      --sans:    'Outfit', sans-serif;
     }
+
     html { scroll-behavior: smooth; }
-    body { background:var(--bg); color:var(--text); font-family:var(--sans); font-weight:300; line-height:1.75; overflow-x:hidden; }
 
-    nav { position:fixed; top:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center; padding:1.4rem 3.5rem; z-index:100; background:linear-gradient(to bottom,var(--bg) 60%,transparent); }
-    .nav-logo { font-family:var(--serif); font-size:1.25rem; color:var(--acc); text-decoration:none; letter-spacing:.03em; }
-    .nav-links { display:flex; gap:2.5rem; list-style:none; }
-    .nav-links a { color:var(--muted); text-decoration:none; font-size:.75rem; letter-spacing:.14em; text-transform:uppercase; font-weight:400; transition:color .25s; }
-    .nav-links a:hover { color:var(--acc); }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.75;
+      overflow-x: hidden;
+    }
 
-    .hero { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; align-items:center; padding:7rem 3.5rem 4rem; gap:4rem; max-width:1200px; margin:0 auto; }
-    .hero-eyebrow { font-size:.7rem; letter-spacing:.28em; text-transform:uppercase; color:var(--acc2); margin-bottom:1.5rem; display:flex; align-items:center; gap:.8rem; opacity:0; animation:fadeUp .7s .2s ease forwards; }
-    .hero-eyebrow::before { content:''; width:2rem; height:1px; background:var(--acc2); }
-    .hero h1 { font-family:var(--serif); font-size:clamp(3rem,5.5vw,5.2rem); font-weight:400; line-height:1.1; margin-bottom:1.5rem; opacity:0; animation:fadeUp .8s .35s ease forwards; }
-    .hero h1 em { font-style:italic; color:var(--acc); }
-    .hero-sub { font-size:1rem; color:var(--muted); max-width:380px; margin-bottom:3rem; opacity:0; animation:fadeUp .8s .5s ease forwards; }
-    .hero-cta { display:flex; gap:1.2rem; flex-wrap:wrap; opacity:0; animation:fadeUp .8s .65s ease forwards; }
+    /* grain overlay */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 200px;
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.35;
+    }
 
-    .btn-primary { display:inline-block; background:var(--acc); color:#fff; text-decoration:none; padding:.9rem 2.2rem; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; font-weight:500; transition:background .3s; }
-    .btn-primary:hover { background:var(--acc2); }
-    .btn-outline { display:inline-block; border:1px solid var(--line); color:var(--muted); text-decoration:none; padding:.9rem 2.2rem; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; transition:border-color .3s,color .3s; }
-    .btn-outline:hover { border-color:var(--acc2); color:var(--acc); }
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.6rem 4rem;
+      z-index: 200;
+      background: linear-gradient(to bottom, var(--bg) 40%, transparent);
+    }
 
-    .hero-images { position:relative; height:600px; opacity:0; animation:fadeIn 1s .4s ease forwards; }
-    .hero-img-main { position:absolute; right:0; top:0; width:75%; height:90%; object-fit:cover; object-position:center top; }
-    .hero-img-accent { position:absolute; left:0; bottom:0; width:50%; height:55%; object-fit:cover; object-position:center top; border:6px solid var(--bg); box-shadow:0 8px 40px rgba(0,0,0,.12); }
-    .hero-tag { position:absolute; right:-12px; bottom:60px; background:var(--acc); color:#fff; padding:1rem 1.4rem; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; writing-mode:vertical-rl; }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      color: var(--gold2);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
 
-    .divider { width:100%; height:1px; background:linear-gradient(90deg,transparent,var(--line) 20%,var(--line) 80%,transparent); }
+    .nav-right { display: flex; align-items: center; gap: 2.5rem; }
 
-    .section { padding:7rem 3.5rem; }
-    .container { max-width:1000px; margin:0 auto; }
-    .section-label { font-size:.67rem; letter-spacing:.3em; text-transform:uppercase; color:var(--acc2); margin-bottom:3.5rem; display:flex; align-items:center; gap:1rem; }
-    .section-label::before { content:'♩'; font-size:1rem; color:var(--acc2); opacity:.5; }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 400;
+      transition: color 0.25s;
+    }
+    .nav-links a:hover { color: var(--gold2); }
 
-    .stats-bar { background:var(--acc); padding:3.5rem; }
-    .stats-grid { max-width:1000px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; text-align:center; }
-    .stat-num { font-family:var(--serif); font-size:3rem; font-weight:400; color:#fff; line-height:1; margin-bottom:.5rem; }
-    .stat-label { font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:rgba(255,255,255,.6); }
+    /* Language Toggle */
+    .lang-toggle {
+      display: flex;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .lang-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 500;
+      padding: 0.35rem 0.75rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .lang-btn.active {
+      background: var(--gold);
+      color: var(--bg);
+    }
+    .lang-btn:not(.active):hover { color: var(--gold2); }
 
-    #about { background:var(--bg); }
-    #about .grid { display:grid; grid-template-columns:1.1fr 1fr; gap:5rem; align-items:center; }
-    #about h2 { font-family:var(--serif); font-size:clamp(2rem,3.5vw,2.8rem); font-weight:400; line-height:1.25; margin-bottom:1.5rem; }
-    #about p { color:var(--muted); font-size:.97rem; margin-bottom:1.1rem; }
-    .about-img-wrap { position:relative; }
-    .about-img-wrap img { width:100%; aspect-ratio:3/4; object-fit:cover; object-position:center top; display:block; }
-    .about-img-wrap::after { content:''; position:absolute; bottom:-16px; right:-16px; width:60%; height:60%; border:2px solid var(--acc2); opacity:.35; z-index:-1; }
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+      position: relative;
+    }
 
-    #projects { background:var(--bg2); }
-    .projects-note { text-align:center; padding:4rem 2rem; color:var(--muted); font-family:var(--serif); font-style:italic; font-size:1.3rem; }
-    .projects-note span { display:block; font-family:var(--sans); font-style:normal; font-size:.75rem; letter-spacing:.15em; text-transform:uppercase; color:var(--acc2); margin-top:.75rem; }
+    .hero-img-col {
+      position: relative;
+      overflow: hidden;
+    }
 
-    #gallery { background:var(--bg); }
-    .gallery-grid { display:grid; grid-template-columns:1.5fr 1fr; grid-template-rows:auto auto; gap:1rem; }
-    .gallery-item { overflow:hidden; }
-    .gallery-item img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .5s ease; }
-    .gallery-item:hover img { transform:scale(1.03); }
-    .gallery-item:nth-child(1) { grid-row:span 2; height:560px; }
-    .gallery-item:nth-child(2) { height:270px; }
-    .gallery-item:nth-child(3) { height:270px; }
+    .hero-img-col img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: brightness(0.75) contrast(1.05);
+    }
 
-    #contact { background:var(--bg2); text-align:center; }
-    #contact h2 { font-family:var(--serif); font-size:clamp(2.5rem,5vw,4rem); font-weight:400; margin-bottom:1rem; line-height:1.2; }
-    #contact h2 em { font-style:italic; color:var(--acc); }
-    #contact p { color:var(--muted); margin-bottom:3rem; font-size:.97rem; }
-    .contact-links { display:flex; justify-content:center; gap:2.5rem; flex-wrap:wrap; }
-    .contact-links a { color:var(--muted); text-decoration:none; font-size:.74rem; letter-spacing:.14em; text-transform:uppercase; transition:color .25s; border-bottom:1px solid transparent; padding-bottom:2px; }
-    .contact-links a:hover { color:var(--acc); border-color:var(--acc2); }
+    .hero-img-col::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, transparent 50%, var(--bg) 100%),
+                  linear-gradient(to top, var(--bg) 0%, transparent 30%);
+    }
 
-    footer { border-top:1px solid var(--line); padding:2rem 3.5rem; display:flex; justify-content:space-between; align-items:center; color:var(--muted); font-size:.72rem; letter-spacing:.08em; background:var(--bg); }
+    .hero-text-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 4rem 3rem;
+      position: relative;
+    }
 
-    @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
-    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    .hero-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      display: flex; align-items: center; gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.3s ease forwards;
+    }
+    .hero-eyebrow::before { content: ''; width: 2.5rem; height: 1px; background: var(--gold); }
 
-    @media(max-width:768px){
-      nav{padding:1.2rem 1.5rem} .nav-links{gap:1.5rem}
-      .hero{grid-template-columns:1fr;padding:7rem 1.5rem 3rem;gap:2.5rem}
-      .hero-images{height:380px}
-      .section{padding:5rem 1.5rem}
-      #about .grid{grid-template-columns:1fr;gap:3rem}
-      .stats-grid{grid-template-columns:1fr;gap:2rem} .stats-bar{padding:3rem 1.5rem}
-      .gallery-grid{grid-template-columns:1fr}
-      .gallery-item:nth-child(1){grid-row:span 1;height:300px}
-      .gallery-item:nth-child(2),.gallery-item:nth-child(3){height:240px}
-      footer{flex-direction:column;gap:.5rem;text-align:center}
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 5.5vw, 6rem);
+      font-weight: 400;
+      line-height: 1.0;
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.45s ease forwards;
+    }
+
+    .hero h1 .firstname { display: block; }
+    .hero h1 .lastname {
+      display: block;
+      font-style: italic;
+      color: var(--gold2);
+    }
+
+    .hero-divider {
+      width: 3rem; height: 1px;
+      background: var(--gold);
+      margin: 2rem 0;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.6s ease forwards;
+    }
+
+    .hero-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 340px;
+      line-height: 1.9;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.7s ease forwards;
+    }
+
+    .hero-cta {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.85s ease forwards;
+    }
+
+    .btn-gold {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--bg);
+      text-decoration: none;
+      padding: 0.9rem 2.2rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+    .btn-gold:hover { background: var(--gold2); }
+
+    .btn-ghost {
+      display: inline-block;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.9rem 2.2rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold2); }
+
+    /* scroll hint */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      color: var(--muted);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeIn 1s 1.5s ease forwards;
+    }
+    .scroll-hint::after {
+      content: '';
+      width: 1px; height: 3rem;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollLine 1.5s 1.8s ease infinite;
+    }
+    @keyframes scrollLine {
+      0%   { transform: scaleY(0); transform-origin: top; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      51%  { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ─── SECTION BASE ─── */
+    .section { padding: 7rem 4rem; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 3.5rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+    /* ─── BIO ─── */
+    #bio { background: var(--bg2); }
+
+    .bio-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .bio-img-wrap { position: relative; }
+    .bio-img-wrap img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .bio-img-wrap::before {
+      content: '';
+      position: absolute;
+      top: -1rem; left: -1rem; right: 1rem; bottom: 1rem;
+      border: 1px solid var(--line);
+      z-index: -1;
+    }
+
+    .bio-text h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 2rem;
+    }
+    .bio-text h2 em { font-style: italic; color: var(--gold2); }
+
+    .bio-text p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.9;
+      margin-bottom: 1.2rem;
+    }
+
+    .bio-text p strong { color: var(--text); font-weight: 400; }
+
+    /* ─── PROJECTS ─── */
+    #projects { background: var(--bg); }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--bg2);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+    .project-card:hover { transform: translateY(-5px); }
+
+    .project-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease, filter 0.5s ease;
+      filter: brightness(0.7) saturate(0.8);
+    }
+    .project-card:hover .project-thumb {
+      transform: scale(1.05);
+      filter: brightness(0.85) saturate(1);
+    }
+
+    .project-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      width: 3rem; height: 3rem;
+      border: 1.5px solid rgba(255,255,255,0.6);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.8rem;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .project-card:hover .project-play {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--bg);
+    }
+
+    .project-info {
+      padding: 1.4rem 1.6rem 1.6rem;
+    }
+
+    .project-tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .project-title {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      line-height: 1.3;
+    }
+
+    /* ─── LESSONS ─── */
+    #lessons { background: var(--bg3); }
+
+    .lessons-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+      margin-bottom: 4rem;
+    }
+
+    .lessons-intro h2 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 400;
+      line-height: 1.15;
+    }
+    .lessons-intro h2 em { font-style: italic; color: var(--gold2); }
+    .lessons-intro p { color: var(--muted); font-size: 0.95rem; line-height: 1.9; }
+
+    .styles-list {
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+      margin-top: 1.5rem;
+    }
+    .style-pill {
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      transition: border-color 0.25s, color 0.25s;
+    }
+    .style-pill:hover { border-color: var(--gold); color: var(--gold2); cursor: default; }
+
+    .pricing-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      max-width: 580px;
+    }
+
+    .price-card {
+      background: var(--bg2);
+      padding: 2.2rem;
+      border-top: 2px solid var(--gold);
+      position: relative;
+    }
+
+    .price-duration {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .price-amount {
+      font-family: var(--serif);
+      font-size: 3rem;
+      font-weight: 400;
+      color: var(--gold2);
+      line-height: 1;
+    }
+
+    .price-amount span {
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--muted);
+    }
+
+    .price-note {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--bg); text-align: center; }
+
+    #contact h2 {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 400;
+      margin-bottom: 1rem;
+      line-height: 1.15;
+    }
+    #contact h2 em { font-style: italic; color: var(--gold2); }
+    #contact .lead { color: var(--muted); margin-bottom: 3rem; font-size: 0.97rem; }
+
+    .contact-row {
+      display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
+    }
+    .contact-link {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      transition: color 0.25s;
+      padding-bottom: 2px;
+      border-bottom: 1px solid transparent;
+    }
+    .contact-link:hover { color: var(--gold2); border-color: var(--gold); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 2rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      color: var(--muted);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+    }
+
+    footer .footer-note { font-family: var(--serif); font-style: italic; font-size: 0.85rem; color: var(--gold); }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ─── LANGUAGE SWITCH ─── */
+    [data-en] { display: none; }
+    body.lang-en [data-de] { display: none; }
+    body.lang-en [data-en] { display: revert; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 1.2rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-img-col { height: 55vw; }
+      .hero-text-col { padding: 3rem 1.5rem 4rem; }
+      .section { padding: 5rem 1.5rem; }
+      .bio-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .bio-img-wrap { max-width: 280px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .lessons-intro { grid-template-columns: 1fr; gap: 2.5rem; }
+      .pricing-cards { grid-template-columns: 1fr 1fr; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
     }
   </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
   <a href="#" class="nav-logo">Lami Nam</a>
-  <ul class="nav-links">
-    <li><a href="#about">Über mich</a></li>
-    <li><a href="#projects">Projekte</a></li>
-    <li><a href="#contact">Kontakt</a></li>
-  </ul>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#bio"><span data-de>Über mich</span><span data-en>About</span></a></li>
+      <li><a href="#projects"><span data-de>Projekte</span><span data-en>Projects</span></a></li>
+      <li><a href="#lessons"><span data-de>Unterricht</span><span data-en>Lessons</span></a></li>
+      <li><a href="#contact">Kontakt</a></li>
+    </ul>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('de')">DE</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
 </nav>
 
-<div style="max-width:1200px;margin:0 auto">
-  <div class="hero">
-    <div class="hero-text">
-      <p class="hero-eyebrow">Pianistin</p>
-      <h1>Musik,<br>die <em>bewegt.</em></h1>
-      <p class="hero-sub">Hallo, ich bin Lami Nam — Pianistin mit Leidenschaft für Klang, Ausdruck und lebendige Momente am Klavier.</p>
-      <div class="hero-cta">
-        <a href="#projects" class="btn-primary">Projekte</a>
-        <a href="#contact" class="btn-outline">Kontakt</a>
-      </div>
-    </div>
-    <div class="hero-images">
-      <img class="hero-img-main" src="ManonNiklas_20240810-20_15_35-MN_A5806_websize.jpg" alt="Lami Nam beim Auftritt" />
-      <img class="hero-img-accent" src="_DSF6664.jpg" alt="Lami Nam mit Keyboard" />
-      <div class="hero-tag">Piano</div>
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-img-col">
+    <img src="ManonNiklas_20240810-20_15_35-MN_A5806_websize.jpg" alt="Lami Nam beim Konzert" />
+  </div>
+  <div class="hero-text-col">
+    <p class="hero-eyebrow" data-de>Jazzpianistin · Hannover</p>
+    <p class="hero-eyebrow" data-en>Jazz Pianist · Hannover</p>
+    <h1>
+      <span class="firstname">Lami</span>
+      <span class="lastname">Nam</span>
+    </h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub" data-de>Pianistin. Musikerin. Lehrerin.<br>Jazz, Latin &amp; mehr.</p>
+    <p class="hero-sub" data-en>Pianist. Musician. Teacher.<br>Jazz, Latin &amp; more.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-gold" data-de>Projekte ansehen</a>
+      <a href="#projects" class="btn-gold" data-en>View Projects</a>
+      <a href="#contact" class="btn-ghost">Kontakt</a>
     </div>
   </div>
-</div>
+  <div class="scroll-hint" data-de>Scroll</div>
+  <div class="scroll-hint" data-en>Scroll</div>
+</section>
 
-<div class="divider"></div>
-
-<div class="stats-bar">
-  <div class="stats-grid">
-    <div><div class="stat-num">Piano</div><div class="stat-label">Hauptinstrument</div></div>
-    <div><div class="stat-num" style="font-size:1.8rem;padding-top:.4rem">Live &<br>Studio</div><div class="stat-label" style="margin-top:.4rem">Erfahrung</div></div>
-    <div><div class="stat-num">♩</div><div class="stat-label">Musik mit Herz</div></div>
-  </div>
-</div>
-
-<section class="section" id="about">
+<!-- BIO -->
+<section class="section" id="bio">
   <div class="container">
-    <p class="section-label">Über mich</p>
-    <div class="grid">
-      <div>
-        <h2>Ich lebe<br>für die Musik.</h2>
-        <p>Hier kannst du ein paar Sätze über dich schreiben — z.&nbsp;B. wo du herkommst, wie du zur Musik gefunden hast und was dich als Pianistin besonders macht.</p>
-        <p>Vielleicht dein musikalischer Hintergrund, deine Ausbildung oder die Stile und Genres, die dir am meisten am Herzen liegen.</p>
-        <br />
-        <a href="#contact" class="btn-primary">Schreib mir</a>
+    <p class="section-label" data-de>Über mich</p>
+    <p class="section-label" data-en>About</p>
+    <div class="bio-grid">
+      <div class="bio-img-wrap">
+        <img src="_DSF6664.jpg" alt="Lami Nam Portrait" />
       </div>
-      <div class="about-img-wrap">
-        <img src="00090006.jpg" alt="Lami Nam Portrait" />
+      <div class="bio-text">
+        <h2 data-de>Musik aus <em>Leidenschaft.</em></h2>
+        <h2 data-en>Music with <em>passion.</em></h2>
+        <p data-de>
+          Lami Nam ist eine Jazzpianistin aus Südkorea. Derzeit tritt sie als Musikerin in der Show
+          <strong>„Ich will alles"</strong> am Schauspielhaus Hannover auf und spielte bereits in renommierten
+          Clubs wie dem <strong>Jazz Club Hannover</strong> und dem <strong>Jazz Club Dizzy</strong> (Rotterdam).
+        </p>
+        <p data-en>
+          Lami Nam is a jazz pianist from South Korea. She currently performs as a musician in the show
+          <strong>"Ich will alles"</strong> at the Schauspielhaus Hannover and has already played at renowned
+          clubs such as the <strong>Jazz Club Hannover</strong> and <strong>Jazz Club Dizzy</strong> (Rotterdam).
+        </p>
+        <p data-de>
+          Sie studiert <strong>Jazz Master</strong> an der Hochschule für Musik und Theater Hannover.
+          Zuvor studierte sie kubanische und brasilianische Musik am
+          <strong>Codarts Rotterdam Conservatorium</strong> in Holland.
+        </p>
+        <p data-en>
+          She is currently pursuing a <strong>Jazz Master</strong> at the Hochschule für Musik und Theater Hannover.
+          Previously, she studied Cuban and Brazilian music at the
+          <strong>Codarts Rotterdam Conservatorium</strong> in the Netherlands.
+        </p>
+        <br/>
+        <a href="#contact" class="btn-gold" data-de>Schreib mir</a>
+        <a href="#contact" class="btn-gold" data-en>Get in touch</a>
       </div>
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
-
+<!-- PROJECTS -->
 <section class="section" id="projects">
   <div class="container">
-    <p class="section-label">Projekte & Auftritte</p>
-    <div class="projects-note">
-      Projekte folgen in Kürze …
-      <span>Schau bald wieder vorbei</span>
+    <p class="section-label" data-de>Projekte</p>
+    <p class="section-label" data-en>Projects</p>
+    <div class="projects-grid">
+
+      <a href="https://www.youtube.com/watch?v=vlUycU6mT2s&list=RDvlUycU6mT2s&start_radio=1" target="_blank" class="project-card">
+        <div style="position:relative;overflow:hidden;">
+          <img class="project-thumb" src="https://img.youtube.com/vi/vlUycU6mT2s/maxresdefault.jpg" alt="Latin Jazz Project" />
+          <div class="project-play">▶</div>
+        </div>
+        <div class="project-info">
+          <span class="project-tag" data-de>Projekt</span>
+          <span class="project-tag" data-en>Project</span>
+          <div class="project-title">Latin Jazz Project</div>
+        </div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=3tHlrIzuVYo&list=RD3tHlrIzuVYo&start_radio=1" target="_blank" class="project-card">
+        <div style="position:relative;overflow:hidden;">
+          <img class="project-thumb" src="https://img.youtube.com/vi/3tHlrIzuVYo/maxresdefault.jpg" alt="Reggae Project" />
+          <div class="project-play">▶</div>
+        </div>
+        <div class="project-info">
+          <span class="project-tag" data-de>Projekt</span>
+          <span class="project-tag" data-en>Project</span>
+          <div class="project-title">Reggae Project</div>
+        </div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=Pr5MP6PTskM" target="_blank" class="project-card">
+        <div style="position:relative;overflow:hidden;">
+          <img class="project-thumb" src="https://img.youtube.com/vi/Pr5MP6PTskM/maxresdefault.jpg" alt="Theater – Ich will alles" />
+          <div class="project-play">▶</div>
+        </div>
+        <div class="project-info">
+          <span class="project-tag" data-de>Theater</span>
+          <span class="project-tag" data-en>Theater</span>
+          <div class="project-title" data-de>„Ich will alles" – Schauspielhaus Hannover</div>
+          <div class="project-title" data-en>"Ich will alles" – Schauspielhaus Hannover</div>
+        </div>
+      </a>
+
     </div>
   </div>
 </section>
 
-<div class="divider"></div>
-
-<section class="section" id="gallery">
+<!-- LESSONS -->
+<section class="section" id="lessons">
   <div class="container">
-    <p class="section-label">Impressionen</p>
-    <div class="gallery-grid">
-      <div class="gallery-item"><img src="ManonNiklas_20240810-20_15_35-MN_A5806_websize.jpg" alt="Lami Nam beim Auftritt" /></div>
-      <div class="gallery-item"><img src="00090006.jpg" alt="Lami Nam im Park" /></div>
-      <div class="gallery-item"><img src="_DSF6664.jpg" alt="Lami Nam Portrait" /></div>
+    <p class="section-label" data-de>Klavierunterricht</p>
+    <p class="section-label" data-en>Piano Lessons</p>
+    <div class="lessons-intro">
+      <div>
+        <h2 data-de>Lerne Klavier<br>mit <em>Lami.</em></h2>
+        <h2 data-en>Learn Piano<br>with <em>Lami.</em></h2>
+        <div class="styles-list">
+          <span class="style-pill">Einstieg / Beginner</span>
+          <span class="style-pill">Jazz</span>
+          <span class="style-pill">Latin</span>
+          <span class="style-pill">Pop</span>
+          <span class="style-pill">Klassik / Classical</span>
+        </div>
+      </div>
+      <div>
+        <p data-de>Ob Anfänger oder Fortgeschrittene — Lami unterrichtet mit Geduld, Musikalität und einem breiten Repertoire von Jazz bis Klassik.</p>
+        <p data-en>Whether beginner or advanced — Lami teaches with patience, musicality and a broad repertoire spanning jazz to classical.</p>
+        <br/>
+        <div class="pricing-cards">
+          <div class="price-card">
+            <div class="price-duration" data-de>30 Minuten</div>
+            <div class="price-duration" data-en>30 Minutes</div>
+            <div class="price-amount">25<span> €</span></div>
+            <div class="price-note" data-de>Pro Stunde</div>
+            <div class="price-note" data-en>Per session</div>
+          </div>
+          <div class="price-card">
+            <div class="price-duration" data-de>45 Minuten</div>
+            <div class="price-duration" data-en>45 Minutes</div>
+            <div class="price-amount">35<span> €</span></div>
+            <div class="price-note" data-de>Pro Stunde</div>
+            <div class="price-note" data-en>Per session</div>
+          </div>
+        </div>
+        <br/>
+        <a href="#contact" class="btn-gold" data-de>Probestunde anfragen</a>
+        <a href="#contact" class="btn-gold" data-en>Book a trial lesson</a>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- CONTACT -->
 <section class="section" id="contact">
   <div class="container">
-    <p class="section-label">Kontakt</p>
-    <h2>Lass uns<br><em>zusammen spielen.</em></h2>
-    <p>Du planst ein Event, ein Projekt oder möchtest einfach Hallo sagen?<br>Ich freue mich auf deine Nachricht.</p>
-    <div class="contact-links">
-      <a href="mailto:deine@email.de">✉ deine@email.de</a>
-      <a href="https://instagram.com/deinprofil" target="_blank">Instagram</a>
-      <a href="https://youtube.com/@deinkanal" target="_blank">YouTube</a>
+    <p class="section-label" data-de>Kontakt</p>
+    <p class="section-label" data-en>Contact</p>
+    <h2 data-de>Lass uns<br><em>zusammenspielen.</em></h2>
+    <h2 data-en>Let's make<br><em>music together.</em></h2>
+    <p class="lead" data-de>Für Auftritte, Kooperationen oder Unterricht — melde dich gerne.</p>
+    <p class="lead" data-en>For performances, collaborations or lessons — get in touch.</p>
+    <div class="contact-row">
+      <a href="mailto:deine@email.de" class="contact-link">✉ deine@email.de</a>
+      <a href="https://instagram.com/deinprofil" target="_blank" class="contact-link">Instagram</a>
+      <a href="https://youtube.com/@deinkanal" target="_blank" class="contact-link">YouTube</a>
     </div>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
   <span>© 2025 Lami Nam</span>
-  <span>Pianistin · Hannover</span>
+  <span class="footer-note">Jazz Pianist · Hannover</span>
+  <span>laminampiano.com</span>
 </footer>
+
+<script>
+  function setLang(lang) {
+    document.body.classList.toggle('lang-en', lang === 'en');
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent === lang.toUpperCase());
+    });
+  }
+</script>
 
 </body>
 </html>
